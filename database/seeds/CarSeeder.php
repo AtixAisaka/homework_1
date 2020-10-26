@@ -17,5 +17,17 @@ class CarSeeder extends Seeder
             'color' => 'Red',
             'VIN' => '1GB0G2BA9E1189721'
         ]);
+        DB::table('car')->insert([
+            'brand' => 'BMW',
+            'Model' => 'i8',
+            'color' => 'Dark Gray',
+            'VIN' => '1GB0G2BA9E1189721'
+        ]);
+        DB::table('car')->insert([
+            'brand' => 'Kia',
+            'Model' => 'ProCeed',
+            'color' => 'Silver',
+            'VIN' => '1GB0G2BA9E1189721'
+        ]);
     }
 }

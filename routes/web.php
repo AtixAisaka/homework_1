@@ -18,12 +18,15 @@ Route::get('/', function () {
 Route::get('/show/{id}', [
     'as' => 'show', 'uses' => 'CarController@showAction'
 ]);
+Route::get('/insertForm', [
+    'as' => 'insertForm', 'uses' => 'CarController@showInsertFormAction'
+]);
 
-Route::get('/insert', [
+Route::post('/insert', [
     'as' => 'insert', 'uses' => 'CarController@insertAction'
 ]);
 
-Route::get('/update/{id}', [
+Route::post('/update/{id}', [
     'as' => 'update', 'uses' => 'CarController@updateAction'
 ]);
 
@@ -32,5 +35,5 @@ Route::get('/delete/{id}', [
 ]);
 
 Route::get('/showall', [
-    'as' => 'showall', 'uses' => 'CarController@showAllAction'
+    'as' => 'showall', 'uses' => 'CarController@showAllCars'
 ]);

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\car;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 
@@ -12,30 +13,37 @@ class CarController extends Controller
 
     public function showAction($id){
         $car = car::find($id);
-        echo $car->Brand."<br>";
-        echo $car->Model."<br>";
-        echo $car->color."<br>";
-        echo $car->VIN."<br>";
-        echo $car->updated_at;
+        return view('updateCar', ['car'=>$car]);
     }
 
-    public function insertAction(){
+    public function showInsertFormAction(){
+        return view('addcar');
+    }
+
+    public function insertAction(Request $request){
         $car = new car();
-        $car->Brand = Str::random(10);
-        $car->Model = Str::random(7);
-        $car->color = Str::random(5);
-        $car->VIN = Str::random(17);
+        $car-> Brand = $request ->input('Brand');
+        $car-> Model = $request ->input('Model');
+        $car-> color = $request ->input('color');
+        $car-> VIN = $request ->input('VIN');
         $car->save();
+        return response() ->view('addcar');
     }
 
-    public function updateAction($id){
-    $car = car::where("id", "=", $id)->first();
-    $car->update(["VIN"=>Str::random(17)]);
+    public function updateAction($id, Request $request){
+    $car = car::find($id);
+    $car-> Brand = $request->input('Brand');
+        $car-> Model = $request->input('Model');
+        $car-> color = $request->input('color');
+        $car-> VIN = $request->input('VIN');
+    $car->update();
+    return redirect()->action('CarController@showAllCars');
     }
 
     public function deleteAction($id){
     $car = car::find($id);
     $car->delete();
+    return redirect()->action('CarController@showAllCars');
     }
 
     public function showAllAction(){
@@ -43,6 +51,11 @@ class CarController extends Controller
     foreach ($cars as $car){
         echo "Brand and Model:". $car->Brand . " ". $car->Model . " Color:".$car->color. " VIN:".$car->VIN."<br>";
     }
+    }
+
+    public function showAllCars(){
+        $cars = car::all();
+        return view ('showAllCars', ['cars'=>$cars]);
     }
 
 
